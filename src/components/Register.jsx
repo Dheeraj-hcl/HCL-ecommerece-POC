@@ -13,6 +13,18 @@ function Register(props) {
       <form>
         <div className="from-inner">
           <div className="form-group">
+            <label htmlFor="name">FirstName</label>
+            <input placeholder="enter your firstname" type="text" />
+          </div>
+          <div className="form-group">
+            <label>LastName</label>
+            <input placeholder="enter your lastname" type="text" />
+          </div>
+          <div className="form-group">
+            <label>PhoneNumber</label>
+            <input placeholder="enter your Phone Number" type="text" />
+          </div>
+          <div className="form-group">
             <label>Username</label>
             <input placeholder="enter your username" type="email" />
           </div>

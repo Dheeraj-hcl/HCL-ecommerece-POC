@@ -5,8 +5,8 @@ import Login from "./login";
 import Register from "./Register";
 function Entry() {
   const [isNew, setIsNew] = useState(false);
-  function changeIsNew(x) {
-    setIsNew(x);
+  function changeIsNew(changedIsNew) {
+    setIsNew(changedIsNew);
   }
   return (
     <div>
