@@ -5,8 +5,8 @@ import Login from "./login";
 import Register from "./Register";
 function Entry() {
   const [isNew, setIsNew] = useState(false);
-  function changeIsNew() {
-    setIsNew(true);
+  function changeIsNew(x) {
+    setIsNew(x);
   }
   return (
     <div>
@@ -18,11 +18,9 @@ function Entry() {
           India's only shopping portal which allow free coupouns to their
           employees
         </p>
-        <form>
-          {isNew ? <Register /> : <Login />}
-          <p>New Here?</p>
-          <a onClick={changeIsNew}>Create account</a>
-        </form>
+        <div>
+          {isNew ? <Register isNewForReg = {true} changeIsNewForReg = {changeIsNew}/> : <Login isNewForLogin = {false} changeIsNewForLogin ={changeIsNew}/>}
+        </div>
       </div>
     </div>
   );
