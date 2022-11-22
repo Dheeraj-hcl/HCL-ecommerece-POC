@@ -26,7 +26,7 @@ function Register(props) {
           </div>
           <div className="form-group">
             <label>Username</label>
-            <input placeholder="enter your username" type="email" />
+            <input placeholder="enter your email" type="email" />
           </div>
           <div className="form-group">
             <label>Password</label>

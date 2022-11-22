@@ -3,11 +3,15 @@ import shop from "./shop.JPG";
 import HCL_logo from "./HCL_logo.svg";
 import Login from "./login";
 import Register from "./Register";
+
 function Entry() {
+
   const [isNew, setIsNew] = useState(false);
+
   function changeIsNew(changedIsNew) {
     setIsNew(changedIsNew);
   }
+
   return (
     <div>
       <img className="left" src={shop} alt="woman shopping"></img>
