@@ -14,8 +14,8 @@ function Entry() {
 
   return (
     <div>
-      <img className="left" src={shop} alt="woman shopping"></img>
-      <div className="right">
+      
+      <div >
         <img className="logo" src={HCL_logo} alt="HCL-logo"></img>
         <h1>Welcome to HCL Shopping portal</h1>
         <p>
