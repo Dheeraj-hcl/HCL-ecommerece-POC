@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import shop from "./shop.JPG";
 import HCL_logo from "./HCL_logo.svg";
 import Login from "./login";
 import Register from "./Register";
-
+import Home from "./Home";
 function Entry() {
 
   const [isNew, setIsNew] = useState(false);
@@ -25,6 +24,7 @@ function Entry() {
         <div>
           {isNew ? <Register isNewForReg = {true} changeIsNewForReg = {changeIsNew}/> : <Login isNewForLogin = {false} changeIsNewForLogin ={changeIsNew}/>}
         </div>
+        <Home />
       </div>
     </div>
   );
