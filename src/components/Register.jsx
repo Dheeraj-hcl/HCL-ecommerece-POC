@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Form, Button } from "semantic-ui-react";
 import { useMutation, gql } from "@apollo/client";
-
+import { Link, redirect } from "react-router-dom";
+import HCL_logo from "./HCL_logo.svg";
 const REGISTER_USER = gql`
   mutation addUser(
     $firstName: String!
@@ -26,7 +27,6 @@ const REGISTER_USER = gql`
 `;
 
 function Register(props) {
-  const [isNew, setIsNew] = useState(props.isNewForReg);
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     firstName: "",
@@ -36,18 +36,13 @@ function Register(props) {
     password: "",
   });
 
-  function changeIsNew() {
-    setIsNew(false);
-    props.changeIsNewForReg(false);
-  }
-
   function onChange(event) {
     setValues({ ...values, [event.target.name]: event.target.value });
   }
 
-  const [addUser, { loading, error, data }] = useMutation(REGISTER_USER, {
+  const [addUser, { loading }] = useMutation(REGISTER_USER, {
     update(proxy, result) {
-      console.log(result);
+      console.log(result.data.userRegister);
     },
     onError({ graphQLErrors }) {
       setErrors(graphQLErrors[0].errors);
@@ -62,6 +57,12 @@ function Register(props) {
 
   return (
     <div className="form-container">
+      <img className="logo" src={HCL_logo} alt="HCL-logo"></img>
+      <h1>Welcome to HCL Shopping portal</h1>
+      <p>
+        India's only shopping portal which allow free coupouns to their
+        employees
+      </p>
       <Form onSubmit={onSubmit} noValidate className={loading ? "loading" : ""}>
         <div>
           <Form.Input
@@ -111,8 +112,8 @@ function Register(props) {
           />
           <Button type="submit">Sign Up</Button>
           {Object.keys(errors).length > 0 && (
-            <div >
-              <ul >
+            <div>
+              <ul>
                 {Object.values(errors).map((value) => (
                   <li key={value}>{value}</li>
                 ))}
@@ -120,7 +121,7 @@ function Register(props) {
             </div>
           )}
           <p>Already have an account?</p>
-          <p onClick={changeIsNew}>Login</p>
+          <Link to="/">Login</Link>
         </div>
       </Form>
     </div>
