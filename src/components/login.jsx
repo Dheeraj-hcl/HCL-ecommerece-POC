@@ -1,83 +1,86 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { Form, Button } from "semantic-ui-react";
+import { useMutation, gql } from "@apollo/client";
+
+const LOGIN_USER = gql`
+  mutation loginUser($email: String!, $password: String!) {
+    userLogin(email: $email, password: $password) {
+      id
+      fullName
+      email
+      phoneNumber
+    }
+  }
+`;
 
 function Login(props) {
   const [isNew, setIsNew] = useState(props.isNewForLogin);
-  const [formValues, setFormValues] = useState({
+  const [errors, setErrors] = useState({});
+  const [values, setValues] = useState({
     email: "",
     password: "",
   });
-  const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
 
   function changeIsNew() {
     setIsNew();
     props.changeIsNewForLogin(true);
   }
 
-  function handleChange(event) {
-    const { name, value } = event.target;
-    setFormValues({ ...formValues, [name]: value });
+  function onChange(event) {
+    setValues({ ...values, [event.target.name]: event.target.value });
   }
 
-  function handleSubmit(event) {
+  const [loginUser, { loading }] = useMutation(LOGIN_USER, {
+    update(proxy, result) {
+      console.log(result);
+    },
+    onError({ graphQLErrors }) {
+      setErrors(graphQLErrors[0].errors);
+    },
+    variables: values,
+  });
+
+  function onSubmit(event) {
     event.preventDefault();
-    setFormErrors(validate(formValues));
-    setIsSubmit(true);
+    loginUser();
   }
-
-  function validate(values) {
-    const errors = {};
-    // const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    if (!values.email) {
-      errors.email = "Email is required!";
-     }
-    //  else if( !regex.test(values.email)){
-    //   errors.email = "Please enter a valid email";
-    // }
-    if (!values.password) {
-      errors.password = "Password is required";
-    }
-    return errors;
-  }
-
-  useEffect(() => {
-    console.log(formErrors);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
-    }
-  }, [formErrors]);
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <div className="from-inner">
-          <div className="form-group">
-            <label htmlFor="email">Email:</label>
-            <input
-              name="email"
-              placeholder="enter your Email"
-              type="email"
-              onChange={handleChange}
-              value={formValues.email}
-            />
-            <p>{formErrors.email}</p>
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password:</label>
-            <input
-              name="password"
-              placeholder="enter your password"
-              type="password"
-              onChange={handleChange}
-              value={formValues.password}
-            />
-            <p>{formErrors.password}</p>
-          </div>
-          <button type="submit">Login in</button>
+      <Form onSubmit={onSubmit} noValidate className={loading ? "loading" : ""}>
+        <div>
+          <Form.Input
+            label="Email"
+            placeholder="Email"
+            name="email"
+            type="email"
+            value={values.email}
+            error={errors.email ? true : false}
+            onChange={onChange}
+          />
+          <Form.Input
+            label="Password"
+            placeholder="Password"
+            name="password"
+            type="password"
+            value={values.password}
+            error={errors.password ? true : false}
+            onChange={onChange}
+          />
+          <Button type="submit">Log In</Button>
+          {Object.keys(errors).length > 0 && (
+            <div>
+              <ul className="list">
+                {Object.values(errors).map((value) => (
+                  <li key={value}>{value}</li>
+                ))}
+              </ul>
+            </div>
+          )}
           <p>New Here?</p>
           <p onClick={changeIsNew}>Create account</p>
         </div>
-      </form>
+      </Form>
     </div>
   );
 }
