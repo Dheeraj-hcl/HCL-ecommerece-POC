@@ -1,32 +1,19 @@
-import React, { useState } from "react";
-import HCL_logo from "./HCL_logo.svg";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import Login from "./login";
 import Register from "./Register";
-import Home from "./Home";
-function Entry() {
-  const [isNew, setIsNew] = useState(false);
+import SuccessRegister from "./SuccessRegister";
 
-  function changeIsNew(changedIsNew) {
-    setIsNew(changedIsNew);
-  }
+function Entry() {
+
 
   return (
     <div>
-      <img className="logo" src={HCL_logo} alt="HCL-logo"></img>
-      <h1>Welcome to HCL Shopping portal</h1>
-      <p>
-        India's only shopping portal which allow free coupouns to their
-        employees
-      </p>
-      <div>
-        {isNew ? (
-          <Register isNewForReg={true} changeIsNewForReg={changeIsNew} />
-        ) : (
-          <Login isNewForLogin={false} changeIsNewForLogin={changeIsNew} />
-        )}
-      </div>
-      
-
+      <Routes>
+        <Route path="/" element={<Login />}/>
+        <Route path="/register" element={<Register />}/>
+        <Route path="/success" element={<SuccessRegister />} />
+      </Routes>
     </div>
   );
 }
