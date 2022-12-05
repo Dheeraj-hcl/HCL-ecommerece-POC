@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Form, Button } from "semantic-ui-react";
 import { useMutation, gql } from "@apollo/client";
-
+import { Link } from "react-router-dom";
+import HCL_logo from "./HCL_logo.svg";
 const LOGIN_USER = gql`
   mutation loginUser($email: String!, $password: String!) {
     userLogin(email: $email, password: $password) {
@@ -13,18 +14,12 @@ const LOGIN_USER = gql`
   }
 `;
 
-function Login(props) {
-  const [isNew, setIsNew] = useState(props.isNewForLogin);
+function Login() {
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
-
-  function changeIsNew() {
-    setIsNew();
-    props.changeIsNewForLogin(true);
-  }
 
   function onChange(event) {
     setValues({ ...values, [event.target.name]: event.target.value });
@@ -32,7 +27,7 @@ function Login(props) {
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(proxy, result) {
-      console.log(result);
+      console.log(result.data.userLogin);
     },
     onError({ graphQLErrors }) {
       setErrors(graphQLErrors[0].errors);
@@ -47,6 +42,12 @@ function Login(props) {
 
   return (
     <div>
+      <img className="logo" src={HCL_logo} alt="HCL-logo"></img>
+      <h1>Welcome to HCL Shopping portal</h1>
+      <p>
+        India's only shopping portal which allow free coupouns to their
+        employees
+      </p>
       <Form onSubmit={onSubmit} noValidate className={loading ? "loading" : ""}>
         <div>
           <Form.Input
@@ -78,7 +79,7 @@ function Login(props) {
             </div>
           )}
           <p>New Here?</p>
-          <p onClick={changeIsNew}>Create account</p>
+          <Link to="/register">Create account</Link>
         </div>
       </Form>
     </div>
