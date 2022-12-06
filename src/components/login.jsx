@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button } from "semantic-ui-react";
 import { useMutation, gql } from "@apollo/client";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HCL_logo from "./HCL_logo.svg";
 const LOGIN_USER = gql`
   mutation loginUser($email: String!, $password: String!) {
@@ -15,6 +15,7 @@ const LOGIN_USER = gql`
 `;
 
 function Login() {
+  const history = useNavigate();
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     email: "",
@@ -28,6 +29,7 @@ function Login() {
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(proxy, result) {
       console.log(result.data.userLogin);
+      history('/home',{state: result.data.userLogin})
     },
     onError({ graphQLErrors }) {
       setErrors(graphQLErrors[0].errors);
@@ -41,7 +43,7 @@ function Login() {
   }
 
   return (
-    <div>
+    <div className="form-container">
       <img className="logo" src={HCL_logo} alt="HCL-logo"></img>
       <h1>Welcome to HCL Shopping portal</h1>
       <p>
