@@ -1,5 +1,4 @@
 import { useQuery, gql } from "@apollo/client";
-const $id = "user-0001"
 const GET_USER = gql`
   query getUser($id: ID!){
     userProfile(id: $id) {
@@ -11,9 +10,9 @@ const GET_USER = gql`
   }
 `;
 
-function DisplayUser({id}) {
+function DisplayUser(props) {
   const { loading, error, data } = useQuery(GET_USER,{
-    variables: {id: "user-0001"}
+    variables: {id: props.id}
   });
 
   if (loading) return <p>Loading...</p>;
