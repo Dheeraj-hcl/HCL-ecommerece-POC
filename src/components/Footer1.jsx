@@ -14,7 +14,7 @@ export default class Footer1 extends Component {
       <Menu secondary>
         <Menu.Item style={{marginRight: "175px"}}>
           <img
-            style={{ width: "150px", height: "35px", filter:"grayscale(100%"}}
+            style={{ width: "150px", height: "35px"}}
             alt="logo"
             src={HCL_logo}
           />

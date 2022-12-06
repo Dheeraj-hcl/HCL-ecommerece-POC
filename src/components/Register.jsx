@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Form, Button } from "semantic-ui-react";
+import {
+  Button,
+  Form,
+  Grid,
+  Header,
+  Image,
+  Message,
+  Segment,
+} from "semantic-ui-react";
 import { useMutation, gql } from "@apollo/client";
 import { Link, useNavigate } from "react-router-dom";
 import HCL_logo from "./HCL_logo.svg";
@@ -44,14 +52,14 @@ function Register(props) {
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     update(proxy, result) {
       console.log(result.data.userRegister);
-      history("/success", {state: result.data.userRegister.fullName});
+      history("/success", { state: result.data.userRegister.fullName });
     },
     onError({ graphQLErrors }) {
-      if(graphQLErrors){
+      if (graphQLErrors) {
         setErrors(graphQLErrors[0].errors);
       }
     },
-    variables: values
+    variables: values,
   });
 
   function onSubmit(event) {
@@ -60,75 +68,105 @@ function Register(props) {
   }
 
   return (
-    <div className="form-container">
-      <img className="logo" src={HCL_logo} alt="HCL-logo"></img>
-      <h1>Welcome to HCL Shopping portal</h1>
-      <p>
-        India's only shopping portal which allow free coupouns to their
-        employees
-      </p>
-      <Form onSubmit={onSubmit} noValidate className={loading ? "loading" : ""}>
-        <div>
-          <Form.Input
-            label="First Name"
-            placeholder="First Name"
-            name="firstName"
-            type="text"
-            value={values.firstName}
-            error={errors.firstName ? true : false}
-            onChange={onChange}
-          />
-          <Form.Input
-            label="Last Name"
-            placeholder="Last Name"
-            name="lastName"
-            type="text"
-            value={values.lastName}
-            error={errors.lastName ? true : false}
-            onChange={onChange}
-          />
-          <Form.Input
-            label="Phone Number"
-            placeholder="Phone Number"
-            name="phoneNumber"
-            type="text"
-            value={values.phoneNumber}
-            error={errors.phoneNumber ? true : false}
-            onChange={onChange}
-          />
-          <Form.Input
-            label="Email"
-            placeholder="Email"
-            name="email"
-            type="email"
-            value={values.email}
-            error={errors.email ? true : false}
-            onChange={onChange}
-          />
-          <Form.Input
-            label="Password"
-            placeholder="Password"
-            name="password"
-            type="password"
-            value={values.password}
-            error={errors.password ? true : false}
-            onChange={onChange}
-          />
-          <Button type="submit">Sign Up</Button>
-          {Object.keys(errors).length > 0 && (
-            <div>
-              <ul>
-                {Object.values(errors).map((value) => (
-                  <li key={value}>{value}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          <p>Already have an account?</p>
-          <Link to="/">Login</Link>
-        </div>
-      </Form>
-    </div>
+    <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
+      <Grid.Column style={{ maxWidth: 450 }}>
+        <Header as="h2" color="blue" textAlign="center">
+          <Image style={{ width: "150px", height: "35px" }} src={HCL_logo} />
+          <h1>Welcome to HCL Shopping portal</h1>
+          <p>
+            India's only shopping portal which allow free coupouns to their
+            employees
+          </p>
+        </Header>
+        <Form
+          size="large"
+          onSubmit={onSubmit}
+          noValidate
+          className={loading ? "loading" : ""}
+        >
+          <Segment stacked>
+            <Form.Input
+              fluid
+              icon="user"
+              iconPosition="left"
+              placeholder="First Name"
+              name="firstName"
+              type="text"
+              autoComplete="off"
+              value={values.firstName}
+              error={errors.firstName ? true : false}
+              onChange={onChange}
+            />
+            <Form.Input
+              fluid
+              icon="user"
+              iconPosition="left"
+              placeholder="Last Name"
+              name="lastName"
+              type="text"
+              autoComplete="off"
+              value={values.lastName}
+              error={errors.lastName ? true : false}
+              onChange={onChange}
+            />
+            <Form.Input
+              fluid
+              icon="phone"
+              iconPosition="left"
+              placeholder="Phone Number"
+              name="phoneNumber"
+              type="text"
+              autoComplete="off"
+              value={values.phoneNumber}
+              error={errors.phoneNumber ? true : false}
+              onChange={onChange}
+            />
+            <Form.Input
+              fluid
+              icon="user"
+              iconPosition="left"
+              placeholder="E-mail address"
+              name="email"
+              type="email"
+              autoComplete="off"
+              value={values.email}
+              error={errors.email ? true : false}
+              onChange={onChange}
+            />
+            <Form.Input
+              fluid
+              icon="lock"
+              iconPosition="left"
+              placeholder="Password"
+              name="password"
+              type="password"
+              value={values.password}
+              error={errors.password ? true : false}
+              onChange={onChange}
+            />
+            <Button type="submit" color="blue" fluid size="large">
+              SignUp
+            </Button>
+          </Segment>
+        </Form>
+        {Object.keys(errors).length > 0 && (
+          <Message>
+            {Object.keys(errors).length > 0 && (
+              <div className="ui error message">
+                <ul className="list">
+                  {Object.values(errors).map((value) => (
+                    <li key={value}>{value}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </Message>
+        )}
+        <Message>
+          Already have an account? <Link to="/">Login</Link>
+        </Message>
+      </Grid.Column>
+    </Grid>
   );
 }
 

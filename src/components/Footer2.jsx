@@ -11,7 +11,7 @@ export default class Footer2 extends Component {
     return (
       <Menu secondary>
         <Menu.Item
-          style={{ marginRight: "175px" }}
+          style={{ marginRight: "210px" }}
           icon="copyright outline"
           name="2022 HCLTech"
         />

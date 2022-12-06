@@ -1,7 +1,12 @@
-import HCL_logo from "./HCL_logo.svg";
-
+import Footer1 from "./Footer1";
+import Footer2 from "./Footer2";
 function Footer() {
-  return <img className="logo" src={HCL_logo} alt="HCL-logo"></img>;
+  return (
+    <div id="footer">
+      <Footer1 />
+      <Footer2 />
+    </div>
+  );
 }
 
 export default Footer;

@@ -1,42 +1,62 @@
-import React, { Component } from 'react'
-import { Input, Menu } from 'semantic-ui-react'
+import React, { useState } from "react";
+import HCL_logo from "./HCL_logo.svg";
+import { Input, Menu, Select, Button } from "semantic-ui-react";
+import { useNavigate } from "react-router-dom";
 
-export default class MenuExampleSecondary extends Component {
-  state = { activeItem: 'home' }
+const options = [
+  { key: "cateogry", text: "Category", value: "category" },
+  { key: "mobiles", text: "Mobiles", value: "mobiles" },
+  { key: "laptops", text: "Laptops", value: "laptops" },
+];
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+export default function Header1(props) {
+ 
+  const [activeItem, setItem] = useState("home");
+  const history = useNavigate();
+  const handleItemClick = (e, { name }) => setItem(name);
 
-  render() {
-    const { activeItem } = this.state
+  const myProfileClick = () => {
+    history("/profile", { state: props.data });
+  };
 
-    return (
-      <Menu secondary>
+  // const {email, fullName, phoneNumber, id} = this.props.data;
+
+  return (
+    <Menu secondary>
+      <Menu.Item>
+        <img
+          style={{ width: "150px", height: "35px" }}
+          alt="logo"
+          src={HCL_logo}
+        />
+      </Menu.Item>
+      <Menu.Item>
+        <Input type="text" icon="search" placeholder="Search goods" action>
+          <input />
+          <Select compact options={options} defaultValue="category" />
+          <Button>Search</Button>
+        </Input>
+      </Menu.Item>
+      <Menu.Menu position="right">
         <Menu.Item
-          name='home'
-          active={activeItem === 'home'}
-          onClick={this.handleItemClick}
+          icon="cart"
+          name="cart"
+          active={activeItem === "cart"}
+          onClick={handleItemClick}
         />
         <Menu.Item
-          name='messages'
-          active={activeItem === 'messages'}
-          onClick={this.handleItemClick}
+          icon="heart"
+          name="wishlist"
+          active={activeItem === "wishlist"}
+          onClick={handleItemClick}
         />
         <Menu.Item
-          name='friends'
-          active={activeItem === 'friends'}
-          onClick={this.handleItemClick}
+          icon="user"
+          name="My Profile"
+          active={activeItem === "My profile"}
+          onClick={myProfileClick}
         />
-        <Menu.Menu position='right'>
-          <Menu.Item>
-            <Input icon='search' placeholder='Search...' />
-          </Menu.Item>
-          <Menu.Item
-            name='logout'
-            active={activeItem === 'logout'}
-            onClick={this.handleItemClick}
-          />
-        </Menu.Menu>
-      </Menu>
-    )
-  }
+      </Menu.Menu>
+    </Menu>
+  );
 }
