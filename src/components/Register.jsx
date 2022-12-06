@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button } from "semantic-ui-react";
 import { useMutation, gql } from "@apollo/client";
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HCL_logo from "./HCL_logo.svg";
 const REGISTER_USER = gql`
   mutation addUser(
@@ -27,6 +27,7 @@ const REGISTER_USER = gql`
 `;
 
 function Register(props) {
+  const history = useNavigate();
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     firstName: "",
@@ -43,11 +44,14 @@ function Register(props) {
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     update(proxy, result) {
       console.log(result.data.userRegister);
+      history("/success", {state: result.data.userRegister.fullName});
     },
     onError({ graphQLErrors }) {
-      setErrors(graphQLErrors[0].errors);
+      if(graphQLErrors){
+        setErrors(graphQLErrors[0].errors);
+      }
     },
-    variables: values,
+    variables: values
   });
 
   function onSubmit(event) {
