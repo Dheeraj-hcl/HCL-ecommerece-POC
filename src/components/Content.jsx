@@ -1,9 +1,15 @@
 import React from 'react';
-import UncontrolledExample from './Carousel';
+import MenuExampleVerticalDropdown from "./sidebar"
+import GridExampleContainer from './products';
 const Content = () => {
     return (
-        <div>
-            <UncontrolledExample />
+        <div className='content'>
+            <div className='sidebar'>
+            <MenuExampleVerticalDropdown />
+            </div>
+            <div className='products'>
+            <GridExampleContainer />
+            </div>
         </div>
     );
 };
