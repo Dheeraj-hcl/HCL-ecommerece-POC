@@ -22,7 +22,7 @@ const LOGIN_USER = gql`
   }
 `;
 
-function Login() {
+function Login(props) {
   const history = useNavigate();
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
@@ -35,9 +35,10 @@ function Login() {
   }
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
-    update(proxy, result) {
+    update(_, result) {
       console.log(result.data.userLogin);
       history("/home", { state: result.data.userLogin });
+      props.onlogin();
     },
     onError({ graphQLErrors }) {
       setErrors(graphQLErrors[0].errors);

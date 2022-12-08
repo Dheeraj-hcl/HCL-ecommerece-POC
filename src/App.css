@@ -13,7 +13,6 @@ body{
   padding-top: 25px;
   padding-bottom: 25px;
   display: inline-flex;
-
 }
 .sidebar{
   float: left;
@@ -39,4 +38,13 @@ body{
   text-align: center;
   padding-top: 200px;
   padding-bottom: 380px;
+}
+.profile{
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+.profile-button{
+  float: left;
+  top: 10px;
+  left: 10px;
 }
