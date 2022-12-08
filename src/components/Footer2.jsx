@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Menu } from "semantic-ui-react";
-
+import "../App.css"
 export default class Footer2 extends Component {
   state = { activeItem: "home" };
 
@@ -9,7 +9,7 @@ export default class Footer2 extends Component {
   render() {
     const { activeItem } = this.state;
     return (
-      <Menu secondary>
+      <Menu secondary >
         <Menu.Item
           style={{ marginRight: "210px" }}
           icon="copyright outline"

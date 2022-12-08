@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import HCL_logo from "./HCL_logo.svg";
 import { Menu } from "semantic-ui-react";
-
+import "../App.css"
 export default class Footer1 extends Component {
   state = { activeItem: "home" };
 
@@ -11,7 +11,7 @@ export default class Footer1 extends Component {
     const { activeItem } = this.state;
 
     return (
-      <Menu secondary>
+      <Menu secondary >
         <Menu.Item style={{marginRight: "175px"}}>
           <img
             style={{ width: "150px", height: "35px"}}
