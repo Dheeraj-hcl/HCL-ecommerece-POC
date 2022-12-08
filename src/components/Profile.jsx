@@ -1,29 +1,37 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
-import { Card, Image, Container } from "semantic-ui-react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Card, Image, Grid, Button } from "semantic-ui-react";
+import avatar from "./avatar.png";
 function Profile() {
   const location = useLocation();
+  const history = useNavigate();
+  function logout(){
+    history('/');
+  }
   return (
-    <Container>
-    <Card >
-      <Image src="https://react.semantic-ui.com/images/avatar/large/matthew.png" wrapped ui={false} />
-      <Card.Content>
-        <Card.Header>{location.state.fullName}</Card.Header>
-        <Card.Meta>
-          <span className="date">Joined in 2022</span>
-        </Card.Meta>
-        <Card.Description>
-          Matthew is a musician living in Nashville.
-        </Card.Description>
-      </Card.Content>
-      {/* <Card.Content extra>
-        <a>
-          <Icon name="user" />
-          22 Friends
-        </a>
-      </Card.Content> */}
-    </Card>
-    </Container>
+    <Grid textAlign="center" style={{ height: "90vh" }} verticalAlign="middle" >
+      <Grid.Column style={{ maxWidth: 300 }}>
+        <Card>
+          <Image
+            src={avatar}
+            wrapped
+            ui={false}
+          />
+          <Card.Content>
+            <Card.Header>{location.state.fullName}</Card.Header>
+          </Card.Content>
+          <Card.Content extra>
+            <Card.Description>{location.state.email}</Card.Description>
+          </Card.Content>
+          <Card.Content extra>
+            <Card.Description>{location.state.phoneNumber}</Card.Description>
+          </Card.Content>
+          <Card.Content extra>
+            <Button onClick={logout} fluid color="teal"> LogOut </Button>
+          </Card.Content>
+        </Card>
+      </Grid.Column>
+    </Grid>
   );
 }
 
