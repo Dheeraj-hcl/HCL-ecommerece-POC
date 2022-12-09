@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Dropdown, Menu } from 'semantic-ui-react'
 
-export default class MenuExampleVerticalDropdown extends Component {
+export default class Sidebar extends Component {
   state = { activeItem: 'account' }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
