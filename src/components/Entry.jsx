@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./login";
 import Register from "./Register";
@@ -7,19 +7,25 @@ import Home from "./Home";
 import LoginError from "./LoginError";
 function Entry() {
   const [isLogin, setIsLogin] = useState(false);
-  function onlogin(){
+  useEffect(() => {
+    window.onbeforeunload = setIsLogin(true);
+  }, []);
+  function onlogin() {
     setIsLogin(true);
   }
-  function onlogout(){
+  function onlogout() {
     setIsLogin(false);
   }
   return (
-    <div >
+    <div>
       <Routes>
-        <Route path="/" element={<Login onlogin={onlogin}/>}/>
-        <Route path="/register" element={<Register />}/>
+        <Route path="/" element={<Login onlogin={onlogin} />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/success" element={<SuccessRegister />} />
-        <Route path="/home" element={isLogin? <Home onlogout={onlogout}/>: <LoginError />} />
+        <Route
+          path="/home"
+          element={isLogin ? <Home onlogout={onlogout} /> : <LoginError />}
+        />
       </Routes>
     </div>
   );
