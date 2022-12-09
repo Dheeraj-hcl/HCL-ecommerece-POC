@@ -1,4 +1,5 @@
 import React from "react";
+import DisplayUser from "./User";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Card, Image, Grid, Button } from "semantic-ui-react";
 import avatar from "./avatar.png";
@@ -19,15 +20,7 @@ function Profile(props) {
         <Grid.Column style={{ maxWidth: 300, right: 50 }}>
           <Card>
             <Image src={avatar} wrapped ui={false} />
-            <Card.Content>
-              <Card.Header>{location.state.fullName}</Card.Header>
-            </Card.Content>
-            <Card.Content extra>
-              <Card.Description>{location.state.email}</Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              <Card.Description>{location.state.phoneNumber}</Card.Description>
-            </Card.Content>
+            <DisplayUser id={location.state.id}/>
             <Card.Content extra>
               <Button onClick={logout} fluid color="teal">
                 LogOut
