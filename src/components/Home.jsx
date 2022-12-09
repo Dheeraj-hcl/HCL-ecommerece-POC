@@ -10,7 +10,6 @@ function Home(props) {
   const location = useLocation();
   const [isMyProfile, setIsMyProfile] = useState(false);
   const myAccount = () => {
-    console.log(location.state);
     setIsMyProfile(true);
   };
   const handleClick= ()=>{
