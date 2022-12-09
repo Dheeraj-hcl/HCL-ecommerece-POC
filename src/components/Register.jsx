@@ -50,8 +50,7 @@ function Register(props) {
   }
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
-    update(proxy, result) {
-      console.log(result.data.userRegister);
+    update(_, result) {
       history("/success", { state: result.data.userRegister.fullName });
     },
     onError({ graphQLErrors }) {

@@ -36,7 +36,6 @@ function Login(props) {
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(_, result) {
-      console.log(result.data.userLogin);
       history("/home", { state: result.data.userLogin });
       props.onlogin();
     },
