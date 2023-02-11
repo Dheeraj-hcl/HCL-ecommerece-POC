@@ -19,7 +19,7 @@ function DisplayUser(props) {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
   const { id: userId, fullName, phoneNumber, email } = data.userProfile;
-  console.log(data.userProfile);
+  
   return (
     <div key={userId}>
       <Card>

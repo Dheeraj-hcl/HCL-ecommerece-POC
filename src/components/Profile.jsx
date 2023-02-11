@@ -20,7 +20,7 @@ function Profile(props) {
         <Grid.Column style={{ maxWidth: 300, right: 50 }}>
           <Card>
             <Image src={avatar} wrapped ui={false} />
-            <DisplayUser id={location.state.id}/>
+            <DisplayUser id={props.id}/>
             <Card.Content extra>
               <Button onClick={logout} fluid color="teal">
                 LogOut

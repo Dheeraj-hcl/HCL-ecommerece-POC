@@ -1,103 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Image, Card, Button } from "semantic-ui-react";
-import iphone14 from "./iphone14.jpg";
-import iphone13 from "./iphone13.jfif";
-import iphone13pro from './iphone13pro.jpg'
-import samsungs from "./samsungs22.jpg"
-const GridExampleContainer = () => (
-  <Grid container columns={3}>
-    <Grid.Column>
-      <Card>
-        <Image
-          src={iphone14}
-          wrapped
-          ui={false}
-        />
-        <Card.Content>
-          <Card.Header>Iphone 14 </Card.Header>
-        </Card.Content>
-        <Card.Content extra>
-          <Card.Header>⭐⭐⭐⭐</Card.Header>
-        </Card.Content>
-        <Card.Content extra>
-          <Card.Header>$999.99</Card.Header>
-        </Card.Content>
-        <Card.Content extra>
-          <Button fluid color="teal">
-            
-            Buy Now
-          </Button>
-        </Card.Content>
-      </Card>
-      <Card>
-        <Image
-          src={iphone13}
-          wrapped
-          ui={false}
-        />
-        <Card.Content>
-          <Card.Header>Iphone 13</Card.Header>
-        </Card.Content>
-        <Card.Content extra>
-          <Card.Header>⭐⭐⭐⭐</Card.Header>
-        </Card.Content>
-        <Card.Content extra>
-          <Card.Header>$799.99</Card.Header>
-        </Card.Content>
-        <Card.Content extra>
-          <Button fluid color="teal">
-            Buy Now
-          </Button>
-        </Card.Content>
-      </Card>
-    </Grid.Column>
-    <Grid.Column>
-      <Card>
-        <Image
-          src={iphone13pro}
-          wrapped
-          ui={false}
-        />
-        <Card.Content>
-          <Card.Header>Iphone 13 pro</Card.Header>
-        </Card.Content>
-        <Card.Content extra>
-          <Card.Header>⭐⭐⭐⭐⭐</Card.Header>
-        </Card.Content>
-        <Card.Content extra>
-          <Card.Header>$899.99</Card.Header>
-        </Card.Content>
-        <Card.Content extra>
-          <Button fluid color="teal">
-            Buy Now
-          </Button>
-        </Card.Content>
-      </Card>
-    </Grid.Column>
-    <Grid.Column>
-      <Card>
-        <Image
-          src={samsungs}
-          wrapped
-          ui={false}
-        />
-        <Card.Content>
-          <Card.Header>Samsung Galaxy S22 Ultra</Card.Header>
-        </Card.Content>
-        <Card.Content extra>
-          <Card.Header>⭐⭐⭐</Card.Header>
-        </Card.Content>
-        <Card.Content extra>
-          <Card.Header>$650.50</Card.Header>
-        </Card.Content>
-        <Card.Content extra>
-          <Button fluid color="teal">
-            Buy Now
-          </Button>
-        </Card.Content>
-      </Card>
-    </Grid.Column>
-  </Grid>
-);
+import { useQuery, gql } from "@apollo/client";
+import { Link } from "react-router-dom";
+import "../App.css";
+const GET_ALL_PRODUCTS = gql`
+  query getProducts($id: Int) {
+    allProductsData(id: $id) {
+      id
+      title
+      description
+      price
+      thumbnail
+      rating
+    }
+  }
+`;
 
+const GridExampleContainer = (props) => {
+  const { loading, error, data } = useQuery(GET_ALL_PRODUCTS, {
+    variables: { id: 1 },
+  });
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error : {error.message}</p>;
+  return (
+    <div className="productslist">
+      {data.allProductsData &&
+        data.allProductsData.slice(0, 21).map((item, index) => {
+          return (
+            <div key={index} value={index} onClick={()=> props.onclicked()}>
+              <Card as={Link} to={`product/${item.id}`} >
+                <Image className="card-image" src={item.thumbnail} ui={false} />
+                <Card.Content>
+                  <Card.Header>{item.title}</Card.Header>
+                </Card.Content>
+                <Card.Content extra>
+                  <Card.Header>{item.rating}</Card.Header>
+                </Card.Content>
+                <Card.Content extra>
+                  <Card.Header>{item.price}</Card.Header>
+                </Card.Content>
+                <Card.Content extra>
+                  <Button fluid color="teal">
+                    Buy Now
+                  </Button>
+                </Card.Content>
+              </Card>
+            </div>
+          );
+        })}
+    </div>
+  );
+};
 export default GridExampleContainer;

@@ -1,20 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Routes, Route } from "react-router-dom";
+
+import Protected from "./Protected";
 import Login from "./login";
 import Register from "./Register";
 import SuccessRegister from "./SuccessRegister";
 import Home from "./Home";
 import LoginError from "./LoginError";
 function Entry() {
-  const [isLogin, setIsLogin] = useState(false);
-  useEffect(() => {
-    window.onbeforeunload = setIsLogin(true);
-  }, []);
+  const isLogin = useRef(false);
+  // useEffect(() => {
+  //   if(localStorage.getItem('isLoggedIn' === 1)){
+  //     setIsLogin(true);
+  //   }
+
+  // }, []);
+
   function onlogin() {
-    setIsLogin(true);
+    isLogin.current = true
   }
   function onlogout() {
-    setIsLogin(false);
+    isLogin.current = false
   }
   return (
     <div>
@@ -22,9 +28,14 @@ function Entry() {
         <Route path="/" element={<Login onlogin={onlogin} />} />
         <Route path="/register" element={<Register />} />
         <Route path="/success" element={<SuccessRegister />} />
+        <Route path="/auth" element={<LoginError />} />
         <Route
-          path="/home"
-          element={isLogin ? <Home onlogout={onlogout} /> : <LoginError />}
+          path="/home/*"
+          element={
+            <Protected isLoggedIn={isLogin}>
+              <Home onlogout={onlogout} />
+            </Protected>
+          }
         />
       </Routes>
     </div>
@@ -32,3 +43,5 @@ function Entry() {
 }
 
 export default Entry;
+
+// element={isLogin ? <Home onlogout={onlogout} /> : <LoginError />}
